@@ -12,7 +12,7 @@ class ListNode:
   def insert_after(self, value):
     current_next = self.next
     self.next = ListNode(value, self, current_next) # wrapping
-    if current_next: # if new item already has current_next
+    if current_next: # if current item already has next item
       current_next.prev = self.next # inserting this next value before (prev) the new items "current_next"
 
   """Wrap the given value in a ListNode and insert it
@@ -103,26 +103,56 @@ class DoublyLinkedList:
 
 
   def move_to_front(self, node):
-    moved_node = node # save copy of node
-    node.delete() # delete original
-    moved_node.prev = None
-    moved_node.next = self.head
-    self.head = moved_node
-    #self.add_to_head(moved_node) # this method takes a value
+    # moved_node = node # save copy of node
+    # node.delete() # delete original
+    # moved_node.prev = None
+    # moved_node.next = self.head
+    # self.head = moved_node
+    self.add_to_head(node.value)
+    self.delete(node)
+
 
   def move_to_end(self, node):
-    moved_node = node # save copy of node
-    node.delete()
-    moved_node.prev = self.tail
-    self.tail.next = moved_node
-    moved_node.next = None
-    self.tail = moved_node
-    #self.add_to_tail(moved_node) # this method takes a value not a node...
+    self.add_to_tail(node.value)
+    self.delete(node) # delete original reference to node
+
+
+    """
+    Working
+    if node == self.head:
+      self.head = self.head.next
+      
+    
+    if self.length > 1 and node != self.tail:
+      self.tail.insert_after(node.value)
+      self.tail = self.tail.next
+    """
+    
+
 
   def delete(self, node):
-    node.delete()
+    if self.length <= 1:
+      self.head = None
+      self.tail = None
+      self.length = 0
+    
+    elif node == self.head:
+      self.head = self.head.next
+      self.head.prev.delete()
+      self.length -= 1
 
-    self.length -= 1
+    elif node == self.tail:
+      self.tail = self.tail.prev
+      self.tail.next.delete()
+      self.length -= 1
+
+    else:
+      node.delete()
+      self.length -= 1
+
+    
+    
+  
     
   def get_max(self):
     current = self.head
