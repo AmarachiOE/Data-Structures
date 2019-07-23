@@ -28,12 +28,10 @@ class TextBuffer:
     def prepend(self, string_to_add):
         # reverse the incoming string to maintain correct
         # order when adding to the front of the text buffer
-        # for char in range((string_to_add), 0, -1): # backwards
         for char in string_to_add:
             self.contents.add_to_tail(char)
 
         for char in range(len(string_to_add)):
-            # self.contents.add_to_head(self.contents.tail.pop())
             self.contents.add_to_head(self.contents.remove_from_tail())
 
     def delete_front(self, chars_to_remove):
