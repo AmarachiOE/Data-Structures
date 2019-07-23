@@ -69,18 +69,23 @@ class DoublyLinkedList:
 
     def remove_from_head(self):
 
+        if self.head is None:
+            return None # check this
+
         removed = self.head
-        if self.length <= 1:
+        if self.head == self.tail: # self.length = 1
             self.head = None
             self.tail = None
             self.length = 0
+            return removed.value #self.head.value
 
         else:
             self.head = self.head.next
             self.head.prev.delete()
             self.length -= 1
+            return removed.value
 
-        return removed.value
+        #return removed.value
 
     def add_to_tail(self, value):
         new_node = ListNode(value, prev=self.tail)
@@ -114,26 +119,32 @@ class DoublyLinkedList:
     def move_to_front(self, node):
         self.add_to_head(node.value)
         self.delete(node)  # delete original reference to node
+        # node.delete()
+        # self.length -= 1
 
     def move_to_end(self, node):
-        self.add_to_tail(node.value)
-        self.delete(node)
+        self.add_to_tail(node.value) # adds value to length
+        self.delete(node) # removes value from length
 
     def delete(self, node):
-        if self.length <= 1:
+        if self.length <= 1: #self.head is self.tail
             self.head = None
             self.tail = None
             self.length = 0
+            # self.remove_from_head() # take advantage of pre-existing code
+
 
         elif node == self.head:
             self.head = self.head.next
             self.head.prev.delete()
             self.length -= 1
+            # self.remove_from_head()
 
         elif node == self.tail:
             self.tail = self.tail.prev
             self.tail.next.delete()
             self.length -= 1
+            # self.remove_from_tail()
 
         else:
             node.delete()
@@ -144,13 +155,13 @@ class DoublyLinkedList:
         if self.head == None:
             return None
 
-        max = self.head.value
+        max_value = self.head.value
         current = self.head
 
         while current:
-            if current.value > max:
-                max = current.value
+            if current.value > max_value:
+                max_value = current.value
             current = current.next
 
-        print("Max value: ", max)
-        return max
+        print("Max value: ", max_value)
+        return max_value
