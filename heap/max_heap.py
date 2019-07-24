@@ -64,5 +64,39 @@ class Heap:
             else:
                 break
 
+    """ _sift_down grabs the indices of this element's children and determines which child has a larger value. If the larger child's value is larger than the parent's value, the child element is swapped with the parent. """
+
     def _sift_down(self, index):
-        pass
+        while index < len(self.storage)-1:
+            left_child = (2*index) + 1
+            right_child = (2*index) + 2
+
+            # if both left and right children exists
+            if self.storage[left_child] and self.storage[right_child]:
+
+                # if left is bigger than right,
+                # and left bigger than current index/parent
+                # swap, then evaluation new index
+                if self.storage[left_child] > self.storage[right_child] and self.storage[left_child] > self.storage[index]:
+
+                    self.storage[index], self.storage[left_child] = self.storage[left_child], self.storage[index]
+
+                    index = left_child
+
+                # else if right is bigger than left and index, swap, re-eval:
+                elif self.storage[right_child] > self.storage[left_child] and self.storage[right_child] > self.storage[index]:
+
+                    self.storage[index], self.storage[right_child] = self.storage[right_child], self.storage[index]
+
+                    index = right_child
+
+            # Else if only left child exists
+            elif self.storage[left_child]:
+
+                # left bigger than current index/parent?
+                # swap, then evaluation new index
+                if self.storage[left_child] > self.storage[index]:
+
+                    self.storage[index], self.storage[left_child] = self.storage[left_child], self.storage[index]
+
+                    index = left_child
