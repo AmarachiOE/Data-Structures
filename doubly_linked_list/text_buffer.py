@@ -67,6 +67,9 @@ class TextBuffer:
             # set self tail to other buffer's tail
             self.contents.tail = other_buffer.contents.tail
 
+            # add length together
+            self.contents.length += other_buffer.contents.length
+
         else:
             print("Passed in arg is not a TextBuffer")
 

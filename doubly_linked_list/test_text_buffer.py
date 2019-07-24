@@ -38,13 +38,13 @@ class TextBufferTests(unittest.TestCase):
     self.buf.join(other_buf)
     self.assertEqual(self.buf.contents.head.value, 'h')
     self.assertEqual(self.buf.contents.tail.value, '!')
-    #self.assertEqual(len(self.buf.contents), 12)
+    self.assertEqual(len(self.buf.contents), 12)
     
   def test_join_string(self):
     string = ' i am a string?'
     self.buf.join_string(string)
     self.assertEqual(self.buf.contents.head.value, 'h')
     self.assertEqual(self.buf.contents.tail.value, '?')
-    #self.assertEqual(len(self.buf.contents), 20)
+    self.assertEqual(len(self.buf.contents), 20)
 if __name__ == '__main__':
   unittest.main()
