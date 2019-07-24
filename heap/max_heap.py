@@ -67,7 +67,9 @@ class Heap:
     """ _sift_down grabs the indices of this element's children and determines which child has a larger value. If the larger child's value is larger than the parent's value, the child element is swapped with the parent. """
 
     def _sift_down(self, index):
-        while index < len(self.storage)-1:
+        # while parent index is less than array length
+        # to account for children indices
+        while index < len(self.storage)-1: 
             left_child = (2*index) + 1
             right_child = (2*index) + 2
 

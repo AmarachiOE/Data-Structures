@@ -26,12 +26,13 @@ class BinarySearchTree:  # think BinarySearchTreeNode
         if self.value is None or self.value == target:
             return True  # return self.value
 
-        if target < self.value:
+        elif target < self.value:
             if self.left is None:
                 return False
             return self.left.contains(target)  # recursion
 
-        if target > self.value:
+        else:
+            # if target > self.value:
             if self.right is None:
                 return False
             return self.right.contains(target)  # recursion
