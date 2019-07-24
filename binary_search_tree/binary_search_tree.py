@@ -1,4 +1,4 @@
-class BinarySearchTree: # think BinarySearchTreeNode
+class BinarySearchTree:  # think BinarySearchTreeNode
     def __init__(self, value):
         self.value = value
         self.left = None
@@ -9,15 +9,17 @@ class BinarySearchTree: # think BinarySearchTreeNode
             self.value = value
 
         elif value < self.value:
-            if self.left is None: # create new node # BinarySearchTreeNode(value)
-                self.left = BinarySearchTree(value) 
-            else: # recursion
-                self.left.insert(value) 
+            # create new node # BinarySearchTreeNode(value)
+            if self.left is None:
+                self.left = BinarySearchTree(value)
+            else:  # recursion
+                self.left.insert(value)
 
         else:  # value > self.value:
-            if self.right is None: # create new node # BinarySearchTreeNode(value)
-                self.right = BinarySearchTree(value) 
-            else: # recursion
+            # create new node # BinarySearchTreeNode(value)
+            if self.right is None:
+                self.right = BinarySearchTree(value)
+            else:  # recursion
                 self.right.insert(value)
 
     def contains(self, target):
@@ -38,7 +40,7 @@ class BinarySearchTree: # think BinarySearchTreeNode
 
         if self.value is None:
             return 0
-        
+
         else:
             root_max = self.value
 
@@ -56,21 +58,12 @@ class BinarySearchTree: # think BinarySearchTreeNode
 
         return max([root_max, rbranch_max, lbranch_max])
 
-
     def for_each(self, cb):
-        # if self.value is None:
-        #   return None
+        if self.value:  # if exists or != None
+            cb(self.value)
 
-        # else:
-          
-        if self.value is None or self.left is None or self.right is None:
-          return #cb(self.value)
+            if self.left:
+                self.left.for_each(cb)
 
-        else:        
-          if self.right != None:
-            return self.right.for_each(cb)
-          if self.left != None:
-            return self.left.for_each(cb)
-
-        return self.value.for_each(cb)
-
+            if self.right:
+                self.right.for_each(cb)
