@@ -1,4 +1,4 @@
-class BinarySearchTree:
+class BinarySearchTree: # think BinarySearchTreeNode
     def __init__(self, value):
         self.value = value
         self.left = None
@@ -9,15 +9,15 @@ class BinarySearchTree:
             self.value = value
 
         elif value < self.value:
-            if self.left is None:
-                self.left = BinarySearchTree(value)
-            else:
-                self.left.insert(value)
+            if self.left is None: # create new node # BinarySearchTreeNode(value)
+                self.left = BinarySearchTree(value) 
+            else: # recursion
+                self.left.insert(value) 
 
         else:  # value > self.value:
-            if self.right is None:
-                self.right = BinarySearchTree(value)
-            else:
+            if self.right is None: # create new node # BinarySearchTreeNode(value)
+                self.right = BinarySearchTree(value) 
+            else: # recursion
                 self.right.insert(value)
 
     def contains(self, target):

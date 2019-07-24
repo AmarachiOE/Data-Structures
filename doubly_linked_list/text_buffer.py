@@ -34,6 +34,10 @@ class TextBuffer:
         for char in range(len(string_to_add)):
             self.contents.add_to_head(self.contents.remove_from_tail())
 
+        """ or:
+        for c in string_to_add[::-1]: # string reversal
+            self.contents.add_to_head(c) """
+
     def delete_front(self, chars_to_remove):
         for char in range(chars_to_remove):
             self.contents.remove_from_head()
