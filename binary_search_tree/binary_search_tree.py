@@ -23,7 +23,7 @@ class BinarySearchTree:  # think BinarySearchTreeNode
                 self.right.insert(value)
 
     def contains(self, target):
-        if self.value is None or self.value == target:
+        if self.value == target:
             return True  # return self.value
 
         elif target < self.value:
