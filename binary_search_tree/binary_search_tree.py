@@ -1,3 +1,5 @@
+## Runtime Complexity: O(log n) for when we cut off half the tree with every step
+
 class BinarySearchTree:  # think BinarySearchTreeNode
     def __init__(self, value):
         self.value = value
@@ -51,13 +53,14 @@ class BinarySearchTree:  # think BinarySearchTreeNode
                 rresult = self.right.get_max()
                 rbranch_max = rresult
 
+            ### Looking at left side is unnecessary bc in BTS, max will be root or on the right side. The left side is always smaller than the root
             if self.left is None:
                 lbranch_max = 0
             else:
                 lresult = self.left.get_max()
                 lbranch_max = lresult
 
-        return max([root_max, rbranch_max, lbranch_max])
+        return max([root_max, rbranch_max, lbranch_max]) # don't need lbranch 
 
     def for_each(self, cb):
         if self.value:  # if exists or != None
