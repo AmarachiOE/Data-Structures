@@ -1,17 +1,73 @@
-class BinarySearchTree:
-  def __init__(self, value):
-    self.value = value
-    self.left = None
-    self.right = None
+## Runtime Complexity: O(log n) for when we cut off half the tree with every step
 
-  def insert(self, value):
-    pass
+class BinarySearchTree:  # think BinarySearchTreeNode
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
 
-  def contains(self, target):
-    pass
+    def insert(self, value):
+        if value == self.value or self.value is None:
+            self.value = value
 
-  def get_max(self):
-    pass
+        elif value < self.value:
+            # create new node # BinarySearchTreeNode(value)
+            if self.left is None:
+                self.left = BinarySearchTree(value)
+            else:  # recursion
+                self.left.insert(value)
 
-  def for_each(self, cb):
-    pass
+        else:  # value > self.value:
+            # create new node # BinarySearchTreeNode(value)
+            if self.right is None:
+                self.right = BinarySearchTree(value)
+            else:  # recursion
+                self.right.insert(value)
+
+    def contains(self, target):
+        if self.value == target:
+            return True  # return self.value
+
+        elif target < self.value:
+            if self.left is None:
+                return False
+            return self.left.contains(target)  # recursion
+
+        else:
+            # if target > self.value:
+            if self.right is None:
+                return False
+            return self.right.contains(target)  # recursion
+
+    def get_max(self):
+
+        if self.value is None:
+            return 0
+
+        else:
+            root_max = self.value
+
+            if self.right is None:
+                rbranch_max = 0
+            else:
+                rresult = self.right.get_max()
+                rbranch_max = rresult
+
+            ### Looking at left side is unnecessary bc in BTS, max will be root or on the right side. The left side is always smaller than the root
+            if self.left is None:
+                lbranch_max = 0
+            else:
+                lresult = self.left.get_max()
+                lbranch_max = lresult
+
+        return max([root_max, rbranch_max, lbranch_max]) # don't need lbranch 
+
+    def for_each(self, cb):
+        if self.value:  # if exists or != None
+            cb(self.value)
+
+            if self.left:
+                self.left.for_each(cb)
+
+            if self.right:
+                self.right.for_each(cb)

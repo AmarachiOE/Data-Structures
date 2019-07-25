@@ -1,21 +1,104 @@
+"""
+- Max Heap
+- Root should be the maximum value (index = 0)
+- Parent > children
+"""
+
+
 class Heap:
-  def __init__(self):
-    self.storage = []
+    def __init__(self):
+        self.storage = []
 
-  def insert(self, value):
-    pass
+    """ insert adds the input value into the heap; this method should ensure that the inserted value is in the correct spot in the heap"""
 
-  def delete(self):
-    pass
+    def insert(self, value):
+        # append value to end of list (last index)
+        self.storage.append(value)
 
-  def get_max(self):
-    pass
+        # If list items already existed before adding new value
+        if len(self.storage) > 1:
+            # grab index of last added item
+            value_index = len(self.storage)-1
 
-  def get_size(self):
-    pass
+            # pass index into bubble_up()
+            self._bubble_up(value_index)
+            # print("Bubble Up called")
 
-  def _bubble_up(self, index):
-    pass
+    """ delete removes and returns the 'topmost' value from the heap; this method needs to ensure that the heap property is maintained after the topmost element has been removed. """
 
-  def _sift_down(self, index):
-    pass
+    def delete(self):
+        # remove the topmost value from heap
+        deleted = self.storage.pop(0)
+
+        for i in range(0, len(self.storage)):
+            self._bubble_up(i)
+
+        return deleted
+
+    """ get_max returns the maximum value in the heap in constant time."""
+
+    def get_max(self):
+        return self.storage[0]
+
+    def get_size(self):
+        print("Size: ", len(self.storage))
+        return len(self.storage)
+
+    """ _bubble_up moves the element at the specified index "up" the heap by swapping it with its parent if the parent's value is less than the value at the specified index (if parent < child, swap )."""
+
+    def _bubble_up(self, index):
+        while index > 0:
+            # identify parent
+            parent = (index - 1) // 2
+
+            # compare: if child is greater than parent
+            if self.storage[index] > self.storage[parent]:
+                # swap
+                # indicating that this a max heap
+                # since we want the higher value on top
+                self.storage[index], self.storage[parent] = self.storage[parent], self.storage[index]
+
+                # now update the index (change node so while loop can keep going)
+                index = parent
+
+            else:
+                break
+
+    """ _sift_down grabs the indices of this element's children and determines which child has a larger value. If the larger child's value is larger than the parent's value, the child element is swapped with the parent. """
+
+    def _sift_down(self, index):
+        # while parent index is less than array length
+        # to account for children indices
+        while index < len(self.storage)-1: 
+            left_child = (2*index) + 1
+            right_child = (2*index) + 2
+
+            # if both left and right children exists
+            if self.storage[left_child] and self.storage[right_child]:
+
+                # if left is bigger than right,
+                # and left bigger than current index/parent
+                # swap, then evaluation new index
+                if self.storage[left_child] > self.storage[right_child] and self.storage[left_child] > self.storage[index]:
+
+                    self.storage[index], self.storage[left_child] = self.storage[left_child], self.storage[index]
+
+                    index = left_child
+
+                # else if right is bigger than left and index, swap, re-eval:
+                elif self.storage[right_child] > self.storage[left_child] and self.storage[right_child] > self.storage[index]:
+
+                    self.storage[index], self.storage[right_child] = self.storage[right_child], self.storage[index]
+
+                    index = right_child
+
+            # Else if only left child exists
+            elif self.storage[left_child]:
+
+                # left bigger than current index/parent?
+                # swap, then evaluation new index
+                if self.storage[left_child] > self.storage[index]:
+
+                    self.storage[index], self.storage[left_child] = self.storage[left_child], self.storage[index]
+
+                    index = left_child
